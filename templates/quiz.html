@@ -48,7 +48,7 @@
 
         {% for key, opt in block.options.items() %}
           <label>
-            {{ key }}. {{ opt.text }} ({{ opt.subtype }})
+            {{ key }}. {{ opt.text }}
             <input type="number" name="{{ block.block_id }}_{{ key }}" min="1" max="4" required>
           </label><br>
         {% endfor %}
@@ -68,7 +68,7 @@
     {% for key, opt in sc.options.items() %}
       <label>
         <input type="radio" name="{{ sc.block_id if sc.block_id else sc.question_id }}" value="{{ key }}" required>
-        {{ key }}. {{ opt.text }} ({{ opt.subtype }})
+        {{ key }}. {{ opt.text }}
       </label><br>
     {% endfor %}
   </div>
@@ -80,14 +80,14 @@
 <p><em>
   For each of the following statements, choose one:<br>
   1 = Strongly Disagree; 2 = Disagree; 3 = Neutral; 4 = Agree; 5 = Strongly Agree.<br>
-  Your choice (1–5) adds that many points to the statement’s subtype.<br>
+  Your choice (1–5) adds that many points to the statement's subtype.<br>
   Below are all 52 statements, in order. Each line is one question.<br>
-  Copy exactly, showing “L #” and the text. After you paste, set the answer format to a five-point scale (1…5).
+  Copy exactly, showing "L #" and the text. After you paste, set the answer format to a five-point scale (1…5).
 </em></p>
 
 {% for l in quiz_data['likert'] %}
   <div class="question-block">
-    <p><strong>{{ l.item_id }}.</strong> {{ l.text }} ({{ l.subtype }})</p>
+    <p><strong>{{ l.item_id }}.</strong> {{ l.text }}</p>
     {% set likert_labels = ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'] %}
     {% for i in range(1, 6) %}
       <label>
