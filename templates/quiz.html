@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Attachment Quiz</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+  <h1>Attachment Quiz</h1>
+  <form method="POST" action="/results">
+
+    <!-- OVERALL INSTRUCTIONS -->
+<h2>Welcome!</h2>
+<p>
+  This short assessment identifies your primary attachment subtype. You will see three sections:<br>
+  <strong>1.</strong> Forced-Choice (42 blocks)<br>
+  <strong>2.</strong> Scenarios (8 items)<br>
+  <strong>3.</strong> Likert-Scale Statements (52 items)<br><br>
+  Please answer honestly. There are no right or wrong answers—it’s about what best describes how you tend to feel or act.<br>
+  <strong>Estimated completion time:</strong> 10–15 minutes.
+</p>
+
+<hr>
+
+
+
+
+    <!-- FORCED-CHOICE INSTRUCTIONS -->
+<h2>1A. FORCED-CHOICE BLOCKS (FC 1–FC 42)</h2>
+<p><em>
+  For each set below, rank the four statements:<br>
+  – 1 = Most like me<br>
+  – 2 = Somewhat like me<br>
+  – 3 = Not really like me<br>
+  – 4 = Least like me<br><br>
+  Do not repeat a rank. Even if it doesn’t sound fully like you, just pick the best options.<br><br>
+  <strong>Scoring per block:</strong><br>
+  – Rank 1 → +3 points to that statement’s subtype<br>
+  – Rank 2 → +2 points<br>
+  – Rank 3 → +1 point<br>
+  – Rank 4 → 0 points<br><br>
+  Below, each FC block shows a short scenario (in italics) followed by options A–D (each labeled with its subtype).
+</em></p>
+    {% for block in quiz_data['forced_choice'] %}
+      <div class="question-block">
+        <h3><strong>{{ block.block_id }}</strong></h3>
+<p><em>{{ block.prompt }}</em></p>
+
+        {% for key, opt in block.options.items() %}
+          <label>
+            {{ key }}. {{ opt.text }} ({{ opt.subtype }})
+            <input type="number" name="{{ block.block_id }}_{{ key }}" min="1" max="4" required>
+          </label><br>
+        {% endfor %}
+      </div>
+    {% endfor %}
+
+    <!-- SCENARIO QUESTIONS -->
+<h2>Scenario Questions</h2>
+<p><em>
+  For each scenario, select exactly one response.<br>
+  The chosen subtype gets +3 points; the others get 0.
+</em></p>
+
+{% for sc in quiz_data['scenario_choice'] %}
+  <div class="question-block">
+    <h3>{{ sc.prompt if sc.prompt else sc.question }}</h3>
+    {% for key, opt in sc.options.items() %}
+      <label>
+        <input type="radio" name="{{ sc.block_id if sc.block_id else sc.question_id }}" value="{{ key }}" required>
+        {{ key }}. {{ opt.text }} ({{ opt.subtype }})
+      </label><br>
+    {% endfor %}
+  </div>
+{% endfor %}
+
+
+<!-- LIKERT SCALE -->
+<h2>Likert-Scale Questions</h2>
+<p><em>
+  For each of the following statements, choose one:<br>
+  1 = Strongly Disagree; 2 = Disagree; 3 = Neutral; 4 = Agree; 5 = Strongly Agree.<br>
+  Your choice (1–5) adds that many points to the statement’s subtype.<br>
+  Below are all 52 statements, in order. Each line is one question.<br>
+  Copy exactly, showing “L #” and the text. After you paste, set the answer format to a five-point scale (1…5).
+</em></p>
+
+{% for l in quiz_data['likert'] %}
+  <div class="question-block">
+    <p><strong>{{ l.item_id }}.</strong> {{ l.text }} ({{ l.subtype }})</p>
+    {% set likert_labels = ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'] %}
+    {% for i in range(1, 6) %}
+      <label>
+        <input type="radio" name="{{ l.item_id }}" value="{{ i }}" required>
+        {{ likert_labels[i-1] }}
+      </label>
+    {% endfor %}
+  </div>
+{% endfor %}
+
+
+
+
+    <button type="submit">Submit</button>
+  </form>
+</div>
+</body>
+</html>

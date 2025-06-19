@@ -1,0 +1,402 @@
+<!-- templates/fc_question.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ section }} - Question {{ question_index + 1 }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            transition: width 0.3s ease;
+        }
+
+        .question-block {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .ranking-option {
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .ranking-option:hover {
+            border-color: #4CAF50;
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.2);
+        }
+
+        .ranking-option.error {
+            border-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        .ranking-option.valid {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .ranking-option label {
+            flex-grow: 1;
+            margin-right: 15px;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .ranking-option input[type="number"] {
+            width: 70px;
+            padding: 8px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            font-size: 16px;
+        }
+
+        .ranking-option input[type="number"]:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .ranking-option input[type="number"].error {
+            border-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.2);
+        }
+
+        .ranking-option input[type="number"].valid {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.2);
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn:disabled {
+            background: #666666 !important;
+            cursor: not-allowed;
+            opacity: 0.6;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .validation-error {
+            color: #ff6b6b;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(255, 107, 107, 0.15);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        .validation-success {
+            color: #4CAF50;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(76, 175, 80, 0.15);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        .subtype-label {
+            display: block;
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 400;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .ranking-option {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .ranking-option input[type="number"] {
+                width: 100px;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="progress-container">
+        <div class="progress-info">
+            <span><strong>{{ section }}</strong> - Question {{ question_index + 1 }} of {{ total_questions }}</span>
+            <span>0% Complete</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <h1><strong>FORCED CHOICE RANKING</strong></h1>
+    
+    <div class="instructions">
+        <h3><strong>Instructions:</strong></h3>
+        <p>Rank the following statements from <strong>1 (most like you)</strong> to <strong>4 (least like you)</strong>.</p>
+        <div class="p123">
+            <strong>IMPORTANT:</strong> You must use each number (1, 2, 3, 4) exactly once. No duplicates allowed!
+        </div>
+    </div>
+
+    <form method="POST" id="questionForm">
+        <div class="question-block">
+            <p><strong>{{ question.block_id }}</strong>: <em>{{ question.prompt }}</em></p>
+            
+            {% for label, option in question.options.items() %}
+                <div class="ranking-option" id="option_{{ label }}">
+                    <label for="ranking_{{ label }}">
+                        <strong>{{ label }}.</strong> {{ option.text }}
+                        <span class="subtype-label">({{ option.subtype }})</span>
+                    </label>
+                    <input type="number" 
+                           name="{{ question.block_id }}_{{ label }}" 
+                           id="ranking_{{ label }}"
+                           min="1" 
+                           max="4" 
+                           value="{{ saved_response[label] if saved_response and label in saved_response else '' }}"
+                           required>
+                </div>
+            {% endfor %}
+            
+            <div class="validation-error" id="errorMessage"></div>
+            <div class="validation-success" id="successMessage">✓ Perfect! All rankings are valid.</div>
+        </div>
+
+        <div class="navigation-buttons">
+            {% if question_index > 0 %}
+                <a href="{{ url_for('fc_question', question_index=question_index - 1) }}" class="btn btn-secondary">Previous</a>
+            {% else %}
+                <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Start</a>
+            {% endif %}
+            
+            <button type="submit" class="btn btn-primary" id="nextBtn" disabled>
+                {% if question_index == total_questions - 1 %}
+                    Next Section
+                {% else %}
+                    Next Question
+                {% endif %}
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Calculate and set progress
+    const questionIndex = {{ question_index }};
+    const totalQuestions = {{ total_questions }};
+    const progressPercent = Math.round(((questionIndex + 1) / totalQuestions) * 100 * 10) / 10;
+    
+    document.querySelector('.progress-fill').style.width = progressPercent + '%';
+    document.querySelector('.progress-info span:last-child').textContent = progressPercent + '% Complete';
+
+    const form = document.getElementById('questionForm');
+    const inputs = form.querySelectorAll('input[type="number"]');
+    const nextBtn = document.getElementById('nextBtn');
+    const errorMessage = document.getElementById('errorMessage');
+    const successMessage = document.getElementById('successMessage');
+
+    function validateRankings() {
+        const values = Array.from(inputs).map(input => input.value.trim());
+        const numericValues = values.map(v => parseInt(v)).filter(v => !isNaN(v));
+        
+        // Clear previous styling
+        inputs.forEach(input => {
+            input.classList.remove('error', 'valid');
+            input.parentElement.classList.remove('error', 'valid');
+        });
+        
+        // Check if all fields are filled
+        if (values.some(v => v === '')) {
+            showError('Please fill in all ranking fields.');
+            return false;
+        }
+        
+        // Check if all values are between 1-4
+        if (numericValues.some(v => v < 1 || v > 4)) {
+            showError('All rankings must be between 1 and 4.');
+            markInvalidInputs(numericValues);
+            return false;
+        }
+        
+        // Check if all values are unique (no duplicates)
+        const uniqueValues = [...new Set(numericValues)];
+        if (uniqueValues.length !== 4) {
+            showError('Each ranking (1, 2, 3, 4) must be used exactly once. No duplicates allowed!');
+            markDuplicates(numericValues);
+            return false;
+        }
+        
+        // Check if we have exactly 1, 2, 3, 4
+        const sortedValues = [...numericValues].sort();
+        if (sortedValues.join(',') !== '1,2,3,4') {
+            showError('You must use exactly the numbers 1, 2, 3, and 4.');
+            markInvalidInputs(numericValues);
+            return false;
+        }
+        
+        // All validations passed
+        showSuccess();
+        markAllValid();
+        return true;
+    }
+    
+    function showError(message) {
+        errorMessage.textContent = message;
+        errorMessage.style.display = 'block';
+        successMessage.style.display = 'none';
+        nextBtn.disabled = true;
+    }
+    
+    function showSuccess() {
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'block';
+        nextBtn.disabled = false;
+    }
+    
+    function markInvalidInputs(values) {
+        inputs.forEach((input, index) => {
+            const value = parseInt(input.value);
+            if (isNaN(value) || value < 1 || value > 4) {
+                input.classList.add('error');
+                input.parentElement.classList.add('error');
+            }
+        });
+    }
+    
+    function markDuplicates(values) {
+        const duplicates = values.filter((value, index) => values.indexOf(value) !== index);
+        inputs.forEach((input, index) => {
+            const value = parseInt(input.value);
+            if (duplicates.includes(value)) {
+                input.classList.add('error');
+                input.parentElement.classList.add('error');
+            }
+        });
+    }
+    
+    function markAllValid() {
+        inputs.forEach(input => {
+            input.classList.add('valid');
+            input.parentElement.classList.add('valid');
+        });
+    }
+
+    // Add event listeners to all inputs
+    inputs.forEach(input => {
+        input.addEventListener('input', validateRankings);
+        input.addEventListener('blur', validateRankings);
+    });
+
+    // Initial validation check
+    validateRankings();
+
+    // Prevent form submission if validation fails
+    form.addEventListener('submit', function(e) {
+        if (!validateRankings()) {
+            e.preventDefault();
+            return false;
+        }
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!-- templates/likert_question.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ section }} - Question {{ question_index + 1 }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF9800, #F57C00);
+            transition: width 0.3s ease;
+        }
+
+        .question-block {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .subtype-indicator {
+            display: inline-block;
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+            margin-bottom: 20px;
+            padding: 8px 15px;
+            background: rgba(255, 152, 0, 0.2);
+            border: 1px solid rgba(255, 152, 0, 0.3);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .likert-scale {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 25px 0;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            gap: 10px;
+        }
+
+        .likert-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 15px 10px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .likert-option:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .likert-option input[type="radio"] {
+            margin-bottom: 8px;
+            transform: scale(1.3);
+            accent-color: #FF9800;
+        }
+
+        .likert-label {
+            font-size: 0.85em;
+            text-align: center;
+            font-weight: 600;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn:disabled {
+            background: #666666 !important;
+            cursor: not-allowed;
+            opacity: 0.6;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .likert-scale {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .likert-option {
+                flex-direction: row;
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .likert-option input[type="radio"] {
+                margin-right: 10px;
+                margin-bottom: 0;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+</style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="progress-container">
+            <div class="progress-info">
+                <span><strong>{{ section }}</strong> - Question {{ question_index + 1 }} of {{ total_questions }}</span>
+                <span>0% Complete</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <h1><strong>LIKERT SCALE QUESTIONS</strong></h1>
+
+        <div class="instructions">
+            <h3><strong>Instructions:</strong></h3>
+            <p>Rate how much you agree or disagree with each statement using the scale below.</p>
+        </div>
+
+        <form method="POST" id="questionForm">
+            <div class="question-block">
+                <p class="question-text"><strong>{{ question.item_id }}</strong>: <em>{{ question.text }}</em></p>
+                
+                <div class="subtype-indicator">
+                    📊 This statement measures: {{ question.subtype }}
+                </div>
+
+                <div class="likert-scale">
+                    <div class="likert-option">
+                        <input type="radio" name="rating" value="1" id="rating_1" {% if saved_response==1 %}checked{%
+                            endif %} required>
+                        <label for="rating_1" class="likert-label">Strongly<br>Disagree</label>
+                    </div>
+
+                    <div class="likert-option">
+                        <input type="radio" name="rating" value="2" id="rating_2" {% if saved_response==2 %}checked{%
+                            endif %} required>
+                        <label for="rating_2" class="likert-label">Disagree</label>
+                    </div>
+
+                    <div class="likert-option">
+                        <input type="radio" name="rating" value="3" id="rating_3" {% if saved_response==3 %}checked{%
+                            endif %} required>
+                        <label for="rating_3" class="likert-label">Neutral</label>
+                    </div>
+
+                    <div class="likert-option">
+                        <input type="radio" name="rating" value="4" id="rating_4" {% if saved_response==4 %}checked{%
+                            endif %} required>
+                        <label for="rating_4" class="likert-label">Agree</label>
+                    </div>
+
+                    <div class="likert-option">
+                        <input type="radio" name="rating" value="5" id="rating_5" {% if saved_response==5 %}checked{%
+                            endif %} required>
+                        <label for="rating_5" class="likert-label">Strongly<br>Agree</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                {% if question_index > 0 %}
+                <a href="{{ url_for('likert_question', question_index=question_index - 1) }}"
+                    class="btn btn-secondary">Previous</a>
+                {% else %}
+                <a href="{{ url_for('sc_question', question_index=7) }}" class="btn btn-secondary">Previous Section</a>
+                {% endif %}
+
+                <button type="submit" class="btn btn-primary" id="nextBtn" disabled>
+                    {% if question_index == total_questions - 1 %}
+                    View Results
+                    {% else %}
+                    Next Question
+                    {% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Calculate and set progress
+    const questionIndex = {{ question_index }};
+    const totalQuestions = {{ total_questions }};
+    const progressPercent = Math.round(((questionIndex + 1) / totalQuestions) * 100 * 10) / 10;
+    
+    document.querySelector('.progress-fill').style.width = progressPercent + '%';
+    document.querySelector('.progress-info span:last-child').textContent = progressPercent + '% Complete';
+    
+    const form = document.getElementById('questionForm');
+    const radioButtons = form.querySelectorAll('input[type="radio"]');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    function checkSelection() {
+        const isSelected = Array.from(radioButtons).some(radio => radio.checked);
+        nextBtn.disabled = !isSelected;
+    }
+    
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', checkSelection);
+    });
+    
+    // Initial check
+    checkSelection();
+});
+</script>
+</body>
+
+</html>

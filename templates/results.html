@@ -1,0 +1,516 @@
+<!-- templates/results.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Attachment Profile Results</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #2c5530 0%, #1a3c34 50%, #0f2922 100%);
+      margin: 0;
+      padding: 2rem;
+      min-height: 100vh;
+      line-height: 1.6;
+      color: #ffffff;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      animation: slideUp 0.8s ease-out;
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #4CAF50 0%, #45a049 50%, #3d8b40 100%);
+      padding: 3rem 2rem;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(255,255,255,0.05) 10px,
+        rgba(255,255,255,0.05) 20px
+      );
+      animation: float 20s linear infinite;
+    }
+    
+    @keyframes float {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .header .subtitle {
+      margin-top: 0.5rem;
+      font-size: 1.1rem;
+      opacity: 0.9;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .content {
+      padding: 3rem 2rem;
+    }
+    
+    .main-result {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    .dominant-type {
+      display: inline-block;
+      background: linear-gradient(135deg, #FF6B35, #F7931E);
+      color: white;
+      padding: 1.5rem 3rem;
+      border-radius: 50px;
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+      margin-bottom: 1rem;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .score-circle {
+      display: inline-block;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #4CAF50 0%, #45a049 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1rem auto;
+      position: relative;
+    }
+    
+    .score-circle::before {
+      content: '';
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 50%;
+      z-index: 1;
+    }
+    
+    .score-value {
+      position: relative;
+      z-index: 2;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2c5530;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    
+    .stat-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #4CAF50, #FF6B35);
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.12);
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.25rem;
+    }
+    
+    .stat-subtext {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
+    
+    .alignment-strength {
+      text-align: center;
+      margin: 3rem 0;
+    }
+    
+    .strength-indicator {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .strength-indicator.high {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+    }
+    
+    .strength-indicator.medium {
+      background: linear-gradient(135deg, #FF6B35, #F7931E);
+      color: white;
+      box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+    }
+    
+    .strength-indicator.low {
+      background: linear-gradient(135deg, #f44336, #d32f2f);
+      color: white;
+      box-shadow: 0 8px 25px rgba(244, 67, 54, 0.4);
+    }
+    
+    .strength-text {
+      margin-top: 1rem;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .breakdown-section {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 3rem 0;
+    }
+    
+    .breakdown-title {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 2rem;
+    }
+    
+    .breakdown-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .breakdown-item {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+    
+    .breakdown-item:hover {
+      transform: translateY(-3px);
+      background: rgba(255, 255, 255, 0.12);
+    }
+    
+    .breakdown-subtype {
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .breakdown-score {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #4CAF50;
+    }
+    
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .btn {
+      padding: 1rem 2.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+    
+    .download-btn {
+      background: linear-gradient(135deg, #FF6B35, #F7931E);
+      color: white;
+      box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+    }
+    
+    .download-btn:hover {
+      box-shadow: 0 12px 35px rgba(255, 107, 53, 0.5);
+    }
+    
+    .retake-btn {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+    }
+    
+    .retake-btn:hover {
+      box-shadow: 0 12px 35px rgba(76, 175, 80, 0.5);
+    }
+    
+    .icon {
+      font-size: 1.2rem;
+    }
+    
+    /* Brand Typography */
+    h1, h2, h3 {
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    
+    /* Dark theme glassmorphism effects */
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+      
+      .header h1 {
+        font-size: 2rem;
+      }
+      
+      .content {
+        padding: 2rem 1.5rem;
+      }
+      
+      .dominant-type {
+        font-size: 1.4rem;
+        padding: 1rem 2rem;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .actions {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎯 Your Attachment Profile</h1>
+    <p class="subtitle">Discover the key to building unforgettable relationships</p>
+  </div>
+  
+  <div class="content">
+    <div class="main-result">
+      <div class="dominant-type">{{ result.dominant }}</div>
+      <div class="score-circle">
+        <div class="score-value">{{ result.totals[result.dominant] }}</div>
+      </div>
+      <p style="color: rgba(255, 255, 255, 0.8); margin-top: 1rem;">Your dominant attachment subtype score</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Primary Type</div>
+        <div class="stat-value">{{ result.dominant }}</div>
+        <div class="stat-subtext">Your strongest attachment pattern</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-label">Runner-Up</div>
+        <div class="stat-value">{{ result.runner_up }}</div>
+        <div class="stat-subtext">{{ result.totals[result.runner_up] }} points</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-label">Score Gap</div>
+        <div class="stat-value">{{ result.gap }}</div>
+        <div class="stat-subtext">Points ahead of runner-up</div>
+      </div>
+    </div>
+    
+    <div class="alignment-strength">
+      <div class="strength-indicator {{ result.strength|lower }}">
+        {{ result.strength }} Alignment
+      </div>
+      <div class="strength-text">
+        {% if result.strength == 'High' %}
+          Strong and clear attachment pattern with high confidence in results
+        {% elif result.strength == 'Medium' %}
+          Moderate attachment pattern with good confidence in results  
+        {% else %}
+          Mixed attachment patterns - consider retaking for clearer results
+        {% endif %}
+      </div>
+    </div>
+    
+    <div class="breakdown-section">
+      <div class="breakdown-title">📊 Complete Score Breakdown</div>
+      <div class="breakdown-grid">
+        {% for subtype, score in result.totals.items() %}
+        <div class="breakdown-item">
+          <div class="breakdown-subtype">{{ subtype }}</div>
+          <div class="breakdown-score">{{ score }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    
+    <div class="actions">
+      <form method="POST" action="/download" style="margin: 0;">
+        <button type="submit" class="btn download-btn">
+          <span class="icon">📄</span>
+          Download Report
+        </button>
+      </form>
+      <a href="/" class="btn retake-btn">
+        <span class="icon">🔁</span>
+        Retake Assessment
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+// Add smooth animations on load
+document.addEventListener('DOMContentLoaded', function() {
+  // Animate score breakdown items
+  const breakdownItems = document.querySelectorAll('.breakdown-item');
+  breakdownItems.forEach((item, index) => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateY(20px)';
+    setTimeout(() => {
+      item.style.transition = 'all 0.5s ease';
+      item.style.opacity = '1';
+      item.style.transform = 'translateY(0)';
+    }, 100 * index);
+  });
+  
+  // Animate stat cards
+  const statCards = document.querySelectorAll('.stat-card');
+  statCards.forEach((card, index) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    setTimeout(() => {
+      card.style.transition = 'all 0.6s ease';
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    }, 200 * index);
+  });
+});
+</script>
+</body>
+</html>

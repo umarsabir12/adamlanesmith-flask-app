@@ -1,0 +1,234 @@
+<!-- templates/sc_question.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ section }} - Question {{ question_index + 1 }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .progress-container {
+            margin-bottom: 30px;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 600;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2196F3, #1976D2);
+            transition: width 0.3s ease;
+        }
+        
+        .question-block {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .scenario-option {
+            display: flex;
+            align-items: flex-start;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .scenario-option:hover {
+            border-color: #2196F3;
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.2);
+        }
+        
+        .scenario-option input[type="radio"] {
+            margin-right: 10px;
+            margin-top: 2px;
+            transform: scale(1.2);
+            accent-color: #2196F3;
+        }
+        
+        .scenario-option label {
+            cursor: pointer;
+            flex-grow: 1;
+            color: #ffffff;
+            font-weight: 500;
+        }
+        
+        .subtype-label {
+            display: block;
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 400;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 20px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(255, 107, 53, 0.4);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(76, 175, 80, 0.4);
+        }
+        
+        .btn:disabled {
+            background: #666666 !important;
+            cursor: not-allowed;
+            opacity: 0.6;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        
+        @media (max-width: 768px) {
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+</style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="progress-container">
+            <div class="progress-info">
+                <span><strong>{{ section }}</strong> - Question {{ question_index + 1 }} of {{ total_questions }}</span>
+                <span>0% Complete</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <h1><strong>SCENARIO CHOICE</strong></h1>
+
+        <div class="instructions">
+            <h3><strong>Instructions:</strong></h3>
+            <p>Choose the response that best describes how you would typically react in this situation.</p>
+        </div>
+
+        <form method="POST" id="questionForm">
+            <div class="question-block">
+                <p><strong>{{ question.block_id }}</strong>: <em>{{ question.prompt }}</em></p>
+
+                {% for label, option in question.options.items() %}
+                <div class="scenario-option">
+                    <input type="radio" name="answer" value="{{ label }}" id="option_{{ label }}" 
+                           {% if saved_response==label %}checked{% endif %} required>
+                    <label for="option_{{ label }}">
+                        <strong>{{ label }}.</strong> {{ option.text }}
+                        <span class="subtype-label">({{ option.subtype }})</span>
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="navigation-buttons">
+                {% if question_index > 0 %}
+                <a href="{{ url_for('sc_question', question_index=question_index - 1) }}"
+                    class="btn btn-secondary">Previous</a>
+                {% else %}
+                <a href="{{ url_for('fc_question', question_index=41) }}" class="btn btn-secondary">Previous Section</a>
+                {% endif %}
+
+                <button type="submit" class="btn btn-primary" id="nextBtn" disabled>
+                    {% if question_index == total_questions - 1 %}
+                    Next Section
+                    {% else %}
+                    Next Question
+                    {% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Calculate and set progress
+            const questionIndex = {{ question_index }};
+            const totalQuestions = {{ total_questions }};
+            const progressPercent = Math.round(((questionIndex + 1) / totalQuestions) * 100 * 10) / 10;
+
+            document.querySelector('.progress-fill').style.width = progressPercent + '%';
+            document.querySelector('.progress-info span:last-child').textContent = progressPercent + '% Complete';
+
+            const form = document.getElementById('questionForm');
+            const radioButtons = form.querySelectorAll('input[type="radio"]');
+            const nextBtn = document.getElementById('nextBtn');
+
+            function checkSelection() {
+                const isSelected = Array.from(radioButtons).some(radio => radio.checked);
+                nextBtn.disabled = !isSelected;
+            }
+
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', checkSelection);
+            });
+
+            // Initial check
+            checkSelection();
+        });
+    </script>
+</body>
+
+</html>
