@@ -55,13 +55,25 @@ h3 {
 }
 
 .instructions {
-    background: rgba(76, 175, 80, 0.1);
+    background-color: #e8f5e9; /* Fallback for unsupported rgba/blurs */
+    background: rgba(76, 175, 80, 0.1); /* Translucent green */
     border: 1px solid rgba(76, 175, 80, 0.3);
     border-radius: 12px;
     padding: 20px;
     margin-bottom: 30px;
     backdrop-filter: blur(10px);
-}
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  /* 🔐 Force same background on mobile */
+  @media (max-width: 480px) {
+    .instructions {
+      background: rgba(76, 175, 80, 0.1) !important; /* ✅ no comma */
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+  }
+
 @supports (-webkit-touch-callout: none) {
     .instructions {
       background: rgba(76, 175, 80, 0.1);
