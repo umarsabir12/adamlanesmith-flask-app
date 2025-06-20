@@ -11,6 +11,10 @@ import io
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
+app.config.update(
+    SESSION_COOKIE_SAMESITE="None",
+    SESSION_COOKIE_SECURE=True
+)
 
 # Load quiz data
 with open("data/quiz_structure.json", "r", encoding="utf-8") as f:
