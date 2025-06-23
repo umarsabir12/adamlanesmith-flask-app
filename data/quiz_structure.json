@@ -1,7 +1,7 @@
 {
   "forced_choice": [
     {
-      "block_id": "FC1",
+      "block_id": "PR1",
       "prompt": "Your partner pauses before replying to your text.",
       "options": {
         "A": {
@@ -23,7 +23,7 @@
       }
     },
     {
-      "block_id": "FC2",
+      "block_id": "PR2",
       "prompt": "A friend cancels dinner at the last minute.",
       "options": {
         "A": {
@@ -45,7 +45,7 @@
       }
     },
     {
-      "block_id": "FC3",
+      "block_id": "PR3",
       "prompt": "A coworker takes credit for your idea in a meeting.",
       "options": {
         "A": {
@@ -67,7 +67,7 @@
       }
     },
     {
-      "block_id": "FC4",
+      "block_id": "PR4",
       "prompt": "Your partner praises your independence in front of others.",
       "options": {
         "A": {
@@ -89,7 +89,7 @@
       }
     },
     {
-      "block_id": "FC5",
+      "block_id": "PR5",
       "prompt": "A friend invites you to an event you don’t really want to attend.",
       "options": {
         "A": {
@@ -111,7 +111,7 @@
       }
     },
     {
-      "block_id": "FC6",
+      "block_id": "PR6",
       "prompt": "Someone laughs at a story you told in a way you find critical, unkind or disapproving.",
       "options": {
         "A": {
@@ -133,7 +133,7 @@
       }
     },
     {
-      "block_id": "FC7",
+      "block_id": "PR7",
       "prompt": "Your partner says they need some space.",
       "options": {
         "A": {
@@ -155,7 +155,7 @@
       }
     },
     {
-      "block_id": "FC8",
+      "block_id": "PR8",
       "prompt": "You overhear someone gossiping about you.",
       "options": {
         "A": {
@@ -177,7 +177,7 @@
       }
     },
     {
-      "block_id": "FC9",
+      "block_id": "PR9",
       "prompt": "A friend shares something personal, then becomes distant.",
       "options": {
         "A": {
@@ -199,7 +199,7 @@
       }
     },
     {
-      "block_id": "FC10",
+      "block_id": "PR10",
       "prompt": "Your partner calls you unexpectedly during a meeting.",
       "options": {
         "A": {
@@ -221,7 +221,7 @@
       }
     },
     {
-      "block_id": "FC11",
+      "block_id": "PR11",
       "prompt": "Someone compliments your work in front of others.",
       "options": {
         "A": {
@@ -243,7 +243,7 @@
       }
     },
     {
-      "block_id": "FC12",
+      "block_id": "PR12",
       "prompt": "A friend teases you in public.",
       "options": {
         "A": {
@@ -265,7 +265,7 @@
       }
     },
     {
-      "block_id": "FC13",
+      "block_id": "PR13",
       "prompt": "Your partner texts: “We need to talk.”",
       "options": {
         "A": {
@@ -287,7 +287,7 @@
       }
     },
     {
-      "block_id": "FC14",
+      "block_id": "PR14",
       "prompt": "In a group, someone interrupts your story.",
       "options": {
         "A": {
@@ -309,7 +309,7 @@
       }
     },
     {
-      "block_id": "FC15",
+      "block_id": "PR15",
       "prompt": "Your partner forgets your anniversary.",
       "options": {
         "A": {
@@ -331,7 +331,7 @@
       }
     },
     {
-      "block_id": "FC16",
+      "block_id": "PR16",
       "prompt": "A friend shares sad news but you’re busy.",
       "options": {
         "A": {
@@ -353,7 +353,7 @@
       }
     },
     {
-      "block_id": "FC17",
+      "block_id": "PR17",
       "prompt": "After an argument, your partner needs time alone.",
       "options": {
         "A": {
@@ -375,7 +375,7 @@
       }
     },
     {
-      "block_id": "FC18",
+      "block_id": "PR18",
       "prompt": "You overhear someone gossiping about you again.",
       "options": {
         "A": {
@@ -397,7 +397,7 @@
       }
     },
     {
-      "block_id": "FC19",
+      "block_id": "PR19",
       "prompt": "Your partner compliments your problem-solving.",
       "options": {
         "A": {
@@ -419,7 +419,7 @@
       }
     },
     {
-      "block_id": "FC20",
+      "block_id": "PR20",
       "prompt": "Your partner surprises you with a thoughtful gift.",
       "options": {
         "A": {
@@ -441,7 +441,7 @@
       }
     },
     {
-      "block_id": "FC21",
+      "block_id": "PR21",
       "prompt": "A friend asks why you didn’t help earlier.",
       "options": {
         "A": {
@@ -463,7 +463,7 @@
       }
     },
     {
-      "block_id": "FC22",
+      "block_id": "PR22",
       "prompt": "A friend posts something online you dislike.",
       "options": {
         "A": {
@@ -485,7 +485,7 @@
       }
     },
     {
-      "block_id": "FC23",
+      "block_id": "PR23",
       "prompt": "Your partner compliments your independence again.",
       "options": {
         "A": {
@@ -507,7 +507,7 @@
       }
     },
     {
-      "block_id": "FC24",
+      "block_id": "PR24",
       "prompt": "Your partner shares a personal secret.",
       "options": {
         "A": {
@@ -529,7 +529,7 @@
       }
     },
     {
-      "block_id": "FC25",
+      "block_id": "PR25",
       "prompt": "Your partner says, “Let’s take a break for a bit.”",
       "options": {
         "A": {
@@ -551,7 +551,7 @@
       }
     },
     {
-      "block_id": "FC26",
+      "block_id": "PR26",
       "prompt": "A friend compliments your work ethic.",
       "options": {
         "A": {
@@ -573,7 +573,7 @@
       }
     },
     {
-      "block_id": "FC27",
+      "block_id": "PR27",
       "prompt": "Your partner cancels plans again without warning.",
       "options": {
         "A": {
@@ -595,7 +595,7 @@
       }
     },
     {
-      "block_id": "FC28",
+      "block_id": "PR28",
       "prompt": "You notice your partner being secretive with or hiding their phone.",
       "options": {
         "A": {
@@ -617,7 +617,7 @@
       }
     },
     {
-      "block_id": "FC29",
+      "block_id": "PR29",
       "prompt": "A friend reminds you of a secret from your past.",
       "options": {
         "A": {
@@ -639,7 +639,7 @@
       }
     },
     {
-      "block_id": "FC30",
+      "block_id": "PR30",
       "prompt": "Your partner praises your problem-solving skills (again).",
       "options": {
         "A": {
@@ -661,7 +661,7 @@
       }
     },
     {
-      "block_id": "FC31",
+      "block_id": "PR31",
       "prompt": "Your partner asks why you didn’t call back.",
       "options": {
         "A": {
@@ -683,7 +683,7 @@
       }
     },
     {
-      "block_id": "FC32",
+      "block_id": "PR32",
       "prompt": "Someone interrupts your story in a group again.",
       "options": {
         "A": {
@@ -705,7 +705,7 @@
       }
     },
     {
-      "block_id": "FC33",
+      "block_id": "PR33",
       "prompt": "A soft disagreement arises between you and someone you trust.",
       "options": {
         "A": {
@@ -727,7 +727,7 @@
       }
     },
     {
-      "block_id": "FC34",
+      "block_id": "PR34",
       "prompt": "A group project at work goes badly.",
       "options": {
         "A": {
@@ -749,7 +749,7 @@
       }
     },
     {
-      "block_id": "FC35",
+      "block_id": "PR35",
       "prompt": "Someone praises your patience in a difficult moment.",
       "options": {
         "A": {
@@ -771,7 +771,7 @@
       }
     },
     {
-      "block_id": "FC36",
+      "block_id": "PR36",
       "prompt": "You feel uncertain about expressing your needs.",
       "options": {
         "A": {
@@ -793,7 +793,7 @@
       }
     },
     {
-      "block_id": "FC37",
+      "block_id": "PR37",
       "prompt": "A close friend seems distant, but you’re not sure why.",
       "options": {
         "A": {
@@ -815,7 +815,7 @@
       }
     },
     {
-      "block_id": "FC38",
+      "block_id": "PR38",
       "prompt": "You catch yourself slipping back into old fears.",
       "options": {
         "A": {
@@ -837,7 +837,7 @@
       }
     },
     {
-      "block_id": "FC39",
+      "block_id": "PR39",
       "prompt": "You realize you’ve been over-comforting someone to feel needed.",
       "options": {
         "A": {
@@ -859,7 +859,7 @@
       }
     },
     {
-      "block_id": "FC40",
+      "block_id": "PR40",
       "prompt": "You suspect someone you care about is ignoring your efforts.",
       "options": {
         "A": {
@@ -881,7 +881,7 @@
       }
     },
     {
-      "block_id": "FC41",
+      "block_id": "PR41",
       "prompt": "You’re torn between forgiving someone who hurt you or holding a grudge.",
       "options": {
         "A": {
@@ -903,7 +903,7 @@
       }
     },
     {
-      "block_id": "FC42",
+      "block_id": "PR42",
       "prompt": "A friend says they respect your progress but won’t say why.",
       "options": {
         "A": {
