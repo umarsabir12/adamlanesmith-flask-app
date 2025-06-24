@@ -222,7 +222,7 @@
     },
     {
       "block_id": "PR11",
-      "prompt": "I feel like I owe them a thank-you in return?",
+      "prompt": "Someone compliments your work in front of others.",
       "options": {
         "A": {
           "text": "I thank them and trust they mean it.",
@@ -233,7 +233,7 @@
           "subtype": "MANIPULATIVE AVOIDANT"
         },
         "C": {
-          "text": "I feel they owe me a thank-you in return.",
+          "text": "I feel like i owe them a thank-you in return?.",
           "subtype": "TOXIC ANXIOUS"
         },
         "D": {
