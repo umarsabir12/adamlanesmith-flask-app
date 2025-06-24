@@ -79,7 +79,7 @@
             font-weight: 500;
         }
 
-        .ranking-option input[type="number"] {
+        .ranking-option select {
             width: 70px;
             padding: 8px;
             text-align: center;
@@ -92,19 +92,19 @@
             font-size: 16px;
         }
 
-        .ranking-option input[type="number"]:focus {
+        .ranking-option select:focus {
             outline: none;
             border-color: #4CAF50;
             box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
             background: rgba(255, 255, 255, 0.15);
         }
 
-        .ranking-option input[type="number"].error {
+        .ranking-option select.error {
             border-color: #ff6b6b;
             background: rgba(255, 107, 107, 0.2);
         }
 
-        .ranking-option input[type="number"].valid {
+        .ranking-option select.valid {
             border-color: #4CAF50;
             background: rgba(76, 175, 80, 0.2);
         }
@@ -199,7 +199,7 @@
                 gap: 10px;
             }
 
-            .ranking-option input[type="number"] {
+            .ranking-option select {
                 width: 100px;
             }
 
@@ -245,13 +245,12 @@
                     <label for="ranking_{{ label }}">
                         <strong>{{ label }}.</strong> {{ option.text }}
                     </label>
-                    <input type="number" 
-                           name="{{ question.block_id }}_{{ label }}" 
-                           id="ranking_{{ label }}"
-                           min="1" 
-                           max="4" 
-                           value="{{ saved_response[label] if saved_response and label in saved_response else '' }}"
-                           required>
+                    <select name="{{ question.block_id }}_{{ label }}" id="ranking_{{ label }}" required>
+                        <option value="" {% if not saved_response or label not in saved_response %}selected{% endif %}></option>
+                        {% for i in range(1, 5) %}
+                            <option value="{{ i }}" {% if saved_response and label in saved_response and saved_response[label] == i %}selected{% endif %}>{{ i }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             {% endfor %}
             
@@ -288,23 +287,23 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.progress-info span:last-child').textContent = progressPercent + '% Complete';
 
     const form = document.getElementById('questionForm');
-    const inputs = form.querySelectorAll('input[type="number"]');
+    const selects = form.querySelectorAll('select');
     const nextBtn = document.getElementById('nextBtn');
     const errorMessage = document.getElementById('errorMessage');
     const successMessage = document.getElementById('successMessage');
 
     function validateRankings() {
-        const values = Array.from(inputs).map(input => input.value.trim());
+        const values = Array.from(selects).map(select => select.value.trim());
         const numericValues = values.map(v => parseInt(v)).filter(v => !isNaN(v));
         
         // Clear previous styling
-        inputs.forEach(input => {
-            input.classList.remove('error', 'valid');
-            input.parentElement.classList.remove('error', 'valid');
+        selects.forEach(select => {
+            select.classList.remove('error', 'valid');
+            select.parentElement.classList.remove('error', 'valid');
         });
         
         // Check if all fields are filled
-        if (values.some(v => v === '')) {
+        if (values.some(v => v === '0')) {
             showError('Please fill in all ranking fields.');
             return false;
         }
@@ -352,37 +351,49 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function markInvalidInputs(values) {
-        inputs.forEach((input, index) => {
-            const value = parseInt(input.value);
+        selects.forEach((select, index) => {
+            const value = parseInt(select.value);
             if (isNaN(value) || value < 1 || value > 4) {
-                input.classList.add('error');
-                input.parentElement.classList.add('error');
+                select.classList.add('error');
+                select.parentElement.classList.add('error');
             }
         });
     }
     
     function markDuplicates(values) {
         const duplicates = values.filter((value, index) => values.indexOf(value) !== index);
-        inputs.forEach((input, index) => {
-            const value = parseInt(input.value);
+        selects.forEach((select, index) => {
+            const value = parseInt(select.value);
             if (duplicates.includes(value)) {
-                input.classList.add('error');
-                input.parentElement.classList.add('error');
+                select.classList.add('error');
+                select.parentElement.classList.add('error');
             }
         });
     }
     
     function markAllValid() {
-        inputs.forEach(input => {
-            input.classList.add('valid');
-            input.parentElement.classList.add('valid');
+        selects.forEach(select => {
+            select.classList.add('valid');
+            select.parentElement.classList.add('valid');
         });
     }
 
-    // Add event listeners to all inputs
-    inputs.forEach(input => {
-        input.addEventListener('input', validateRankings);
-        input.addEventListener('blur', validateRankings);
+    // Add event listeners to all selects
+    selects.forEach(select => {
+        select.addEventListener('change', validateRankings);
+        select.addEventListener('blur', validateRankings);
+    });
+
+    // Auto-focus next dropdown on change
+    selects.forEach(function(select, idx) {
+        select.addEventListener('change', function() {
+            console.log('select.value', select.value);
+            if (select.value && idx < selects.length - 1) {
+                selects[idx + 1].focus();
+            } else if (select.value && idx === selects.length - 1 && nextBtn) {
+                nextBtn.focus();
+            }
+        });
     });
 
     // Initial validation check
