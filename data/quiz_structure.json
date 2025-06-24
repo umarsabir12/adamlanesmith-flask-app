@@ -222,7 +222,7 @@
     },
     {
       "block_id": "PR11",
-      "prompt": "Someone compliments your work in front of others.",
+      "prompt": "I feel like I owe them a thank-you in return?",
       "options": {
         "A": {
           "text": "I thank them and trust they mean it.",
