@@ -602,6 +602,17 @@ def determine_alignment(final_totals, breakdown):
     dominant, dom_total, dom_fc, dom_lik, dom_sc = score_list[0]
     runner_up, run_total, run_fc, run_lik, run_sc = score_list[1]
     gap = dom_total - run_total
+    
+    attachment_pages = {
+    "SECURE": "https://adamlanesmith.com/secure/",
+    "REMADE SECURE": "https://adamlanesmith.com/remade-secure/",
+    "ETHICAL AVOIDANT": "https://adamlanesmith.com/ethical-avoidant/",
+    "MANIPULATIVE AVOIDANT": "https://adamlanesmith.com/manipulative-avoidant/",
+    "NURTURING ANXIOUS": "https://adamlanesmith.com/nurturing-anxious/",
+    "TOXIC ANXIOUS": "https://adamlanesmith.com/toxic-anxious/",
+    "QUIET DISORGANIZED": "https://adamlanesmith.com/quiet-disorganized/",
+    "LOUD DISORGANIZED": "https://adamlanesmith.com/loud-disorganized/"
+    }
 
     # Determine thresholds
     max_val = MAX_SCORES[dominant]
@@ -622,6 +633,7 @@ def determine_alignment(final_totals, breakdown):
         "strength": strength,
         "totals": final_totals,
         "breakdown": breakdown,
+        "page_link": attachment_pages[dominant],
     }
 
 if __name__ == '__main__':

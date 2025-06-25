@@ -114,6 +114,7 @@
       box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
       margin-bottom: 1rem;
       animation: pulse 2s infinite;
+      text-decoration: none;
     }
     
     @keyframes pulse {
@@ -415,7 +416,7 @@
   
   <div class="content">
     <div class="main-result">
-      <div class="dominant-type">{{ result.dominant }}</div>
+      <a href={{result.page_link}} class="dominant-type">{{ result.dominant }}</a>
       <div class="score-circle">
         <div class="score-value">{{ result.totals[result.dominant] }}</div>
       </div>
