@@ -55,9 +55,27 @@
     }
 
     .click-style{
-      padding-bottom: 15px;
+      /* padding-bottom: 15px; */
       padding-top: 3px;
       color: rgb(240 230 230 / 90%);
+    }
+
+
+    .arrow {
+      display: block; /* puts arrow on new line */
+      font-size: 1.5rem; /* makes arrow larger */
+      margin-top: 0.5rem; /* space between text and arrow */
+      margin-bottom: 1rem;
+      color: rgb(240 230 230 / 90%);
+      animation: bounce 2s infinite; /* optional animation */
+    }
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        transform: translateY(-8px) scale(1.1);
+      }
     }
     
     .header::before {
@@ -419,7 +437,8 @@
   <div class="header">
     <h1>🎯 Your Attachment Profile</h1>
     <p class="subtitle">Discover the key to building unforgettable relationships</p>
-    <p class="click-style">Click bellow to learn more about your <br> attachment profile</p>
+    <p class="click-style">Click below to learn more about your <br> attachment profile</p>
+    <span class="arrow">↓</span>
   </div>
   
   <div class="content">
