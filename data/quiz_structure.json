@@ -511,11 +511,11 @@
       "prompt": "Your partner shares a personal secret.",
       "options": {
         "A": {
-          "text": "I think, “I used to cling, but now I can listen.”",
+          "text": "I think “I used to feel compelled to jump in to help, but now can just listen”",
           "subtype": "REMADE SECURE"
         },
         "B": {
-          "text": "I feel honored and try to comfort them.",
+          "text": "I feel honored that they have chosen to trust me with it.",
           "subtype": "NURTURING ANXIOUS"
         },
         "C": {
@@ -523,7 +523,7 @@
           "subtype": "ETHICAL AVOIDANT"
         },
         "D": {
-          "text": "I feel relieved they finally trusted me with their secrets, now I’m not so vulnerable.",
+          "text": "I feel relieved that they have finally trusted me with their secret, and feel safer knowing that I have this level of influence.",
           "subtype": "LOUD DISORGANIZED"
         }
       }
@@ -819,15 +819,15 @@
       "prompt": "You catch yourself slipping back into old fears.",
       "options": {
         "A": {
-          "text": "I think, “I’ve grown past those worries.”",
+          "text": " I think “I’ve let these patterns control me before, but have now grown past them” and focus on self-regulating.",
           "subtype": "REMADE SECURE"
         },
         "B": {
-          "text": "I expect others to repay me for every kindness.",
+          "text": " I recall my past acts of kindness and find comfort in feeling that others will have to repay me.",
           "subtype": "TOXIC ANXIOUS"
         },
         "C": {
-          "text": "I prefer to keep people guessing about how I feel.",
+          "text": "I hide my true feelings, testing to see if others can figure them out.",
           "subtype": "MANIPULATIVE AVOIDANT"
         },
         "D": {
@@ -1041,7 +1041,7 @@
       "prompt": "You lend a friend money, and they forget to pay you back. You …",
       "options": {
         "A": {
-          "text": "Insist they return it soon before I feel comfortable talking again.",
+          "text": "I insist they return it before I feel comfortable talking to them again.",
           "subtype": "TOXIC ANXIOUS"
         },
         "B": {
