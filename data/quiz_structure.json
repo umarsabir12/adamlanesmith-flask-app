@@ -753,41 +753,41 @@
       "prompt": "Someone praises your patience in a difficult moment.",
       "options": {
         "A": {
-          "text": "I express appreciation and don’t overthink.",
+          "text": "I express appreciation and don’t overthink it.",
           "subtype": "SECURE"
         },
         "B": {
-          "text": "I try to fix everything if someone seems down.",
+          "text": " I feel the urge to check on everyone again to make sure no one is feeling down.",
           "subtype": "NURTURING ANXIOUS"
         },
         "C": {
-          "text": "I notice that this is a relatively new compliment for me?",
+          "text": "I have an introspective moment, noticing that this is a new feeling for me.",
           "subtype": "REMADE SECURE"
         },
         "D": {
-          "text": "I expect favors to be returned without being asked.",
+          "text": "I expect that this favor will be returned",
           "subtype": "TOXIC ANXIOUS"
         }
       }
     },
     {
       "block_id": "PR36",
-      "prompt": "You feel uncertain about expressing your needs.",
+      "prompt": "You realize you have a need that is not being expressed or met.",
       "options": {
         "A": {
-          "text": "I freeze inside when I feel unsure and don’t share.",
+          "text": " I freeze inside, unsure of what to do.",
           "subtype": "QUIET DISORGANIZED"
         },
         "B": {
-          "text": "I prefer to keep people guessing how I feel.",
+          "text": "I drop hints, but keep people guessing how I really feel.",
           "subtype": "MANIPULATIVE AVOIDANT"
         },
         "C": {
-          "text": "I stay quiet rather than risk upsetting anyone.",
+          "text": "I ignore it, not wanting to be a burden.",
           "subtype": "ETHICAL AVOIDANT"
         },
         "D": {
-          "text": "I raise my voice so people can’t ignore my needs.",
+          "text": "I raise my voice and draw attention to me, so that people don’t ignore me.",
           "subtype": "LOUD DISORGANIZED"
         }
       }
@@ -797,7 +797,7 @@
       "prompt": "A close friend seems distant, but you’re not sure why.",
       "options": {
         "A": {
-          "text": "I ask questions calmly because I feel supported.",
+          "text": "I check in on them calmly, desiring to be supportive, but respecting their privacy.",
           "subtype": "SECURE"
         },
         "B": {
@@ -809,7 +809,7 @@
           "subtype": "ETHICAL AVOIDANT"
         },
         "D": {
-          "text": "I wait quietly to see if they notice I’m upset.",
+          "text": "I confront them, so that they understand that their distance upsets me.",
           "subtype": "LOUD DISORGANIZED"
         }
       }
@@ -863,7 +863,7 @@
       "prompt": "You suspect someone you care about is ignoring your efforts.",
       "options": {
         "A": {
-          "text": "I worry they’ll leave me unless I prove I care.",
+          "text": " I feel I should keep caring for them, so that they don’t feel abandoned.",
           "subtype": "NURTURING ANXIOUS"
         },
         "B": {
@@ -871,25 +871,25 @@
           "subtype": "TOXIC ANXIOUS"
         },
         "C": {
-          "text": "I stay quiet rather than risk upsetting anyone.",
+          "text": "I quietly get over it and move on, because I don’t see the point in bringing it up.",
           "subtype": "ETHICAL AVOIDANT"
         },
         "D": {
-          "text": "I raise my voice so that they can see my efforts.",
+          "text": "I confront them for not appreciating my efforts.",
           "subtype": "LOUD DISORGANIZED"
         }
       }
     },
     {
       "block_id": "PR41",
-      "prompt": "You’re torn between forgiving someone who hurt you or holding a grudge.",
+      "prompt": "You’re torn between forgiving someone who hurt you or confronting them about it.",
       "options": {
         "A": {
-          "text": "I consider what decision will make me respect myself.",
+          "text": "I act based on what will make me respect myself the most.",
           "subtype": "REMADE SECURE"
         },
         "B": {
-          "text": "I create distance and hold a grudge to see if they’ll care.",
+          "text": "I create distance to see if they’ll care.",
           "subtype": "MANIPULATIVE AVOIDANT"
         },
         "C": {
@@ -1038,10 +1038,10 @@
     },
     {
       "block_id": "SC6",
-      "prompt": "You lend a friend money, and they forget to pay you back. You …",
+      "prompt": "Your friend forgets a nice gesture you’ve done for them.",
       "options": {
         "A": {
-          "text": "I insist they return it before I feel comfortable talking to them again.",
+          "text": "Withdraw until they understand their mistake and fix it.",
           "subtype": "TOXIC ANXIOUS"
         },
         "B": {
