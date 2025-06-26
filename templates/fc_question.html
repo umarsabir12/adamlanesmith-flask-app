@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ section }} - Question {{ question_index + 1 }}</title>
+    <title>Priority Ranking - Question {{ question_index + 1 }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
         .progress-container {
@@ -223,7 +223,13 @@
 <div class="container">
     <div class="progress-container">
         <div class="progress-info">
-            <span><strong>{{ section }}</strong> - Question {{ question_index + 1 }} of {{ total_questions }}</span>
+            
+            <span>
+                {% if section != "Forced Choice" %}
+                  <strong>{{ section }}</strong> - 
+                {% endif %}
+                Question {{ question_index + 1 }} of {{ total_questions }}
+              </span>
             <span>0% Complete</span>
         </div>
         <div class="progress-bar">
