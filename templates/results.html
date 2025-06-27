@@ -85,14 +85,14 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: repeating-linear-gradient(
+      /* background: repeating-linear-gradient(
         45deg,
         transparent,
         transparent 10px,
         rgba(255,255,255,0.05) 10px,
         rgba(255,255,255,0.05) 20px
-      );
-      animation: float 20s linear infinite;
+      ); */
+      /* animation: float 20s linear infinite; */
     }
     
     @keyframes float {
@@ -443,7 +443,7 @@
 <body>
 <div class="container">
   <div class="header">
-    <h1>🎯 Your Attachment Assessment Results Are Ready!</h1>
+    <h1>Your Attachment Assessment Results Are Ready!</h1>
     <p class="subtitle">Thank you for taking the time to complete the assessment. Please remember that this is not a diagnosis, all assessments have a degree of error, and that attachment styles are fluid and can change over time. These insights are for information purposes only. 
     </p>
     <p class="click-style">Click the button below to learn more about the attachment style that best fits your responses!</p>
@@ -453,10 +453,10 @@
   <div class="content">
     <div class="main-result">
       <a href={{result.page_link}} class="dominant-type">{{ result.dominant }}</a>
-      <div class="score-circle">
+      <!-- <div class="score-circle">
         <div class="score-value">{{ result.totals[result.dominant] }}</div>
-      </div>
-      <p style="color: rgba(255, 255, 255, 0.8); margin-top: 1rem;">Your dominant attachment subtype score</p>
+      </div> -->
+      <!-- <p style="color: rgba(255, 255, 255, 0.8); margin-top: 1rem;">Your dominant attachment subtype score</p> -->
     </div>
     
     <!-- <div class="stats-grid">
