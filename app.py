@@ -238,7 +238,9 @@ def results():
     result_cache = result
 
     # Send results to WordPress
-    send_to_wordpress(session.get('user_name'), session.get('user_email'), result)
+    user_name = session.get('user_name')
+    user_email = session.get('user_email')
+    send_to_wordpress(user_name, user_email, result)
 
     return render_template('results.html', result=result)
 
@@ -656,11 +658,13 @@ def start():
 
 
 def send_to_wordpress(name, email, result):
+    print(name, email)
+    # print(session.get('user_name'))
     url = "https://adamlanesmith.com/wp-json/custom/v1/submit-quiz"
     data = {
         "name": name,
         "email": email,
-        "result": result  # assume result is just a string
+        "result": result['dominant']  # assume result is just a string
     }
     headers = {
         'Content-Type': 'application/json',
@@ -674,7 +678,8 @@ def send_to_wordpress(name, email, result):
         print("✅ Success:", response.status_code)
         print("📦 Response:", response.text)
     except Exception as e:
+        print(data)
         print("❌ Failed to send result to WordPress:", e)
 
 # Call with flat string result
-send_to_wordpress("Umar", "umar@example.com", "Secure")
+# send_to_wordpress("Umar", "umar@example.com", "Secure")
