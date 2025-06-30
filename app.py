@@ -8,6 +8,8 @@ from reportlab.lib.units import inch
 from reportlab.lib.colors import Color, white, black
 from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_JUSTIFY
 import io
+import requests
+import json
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
@@ -234,6 +236,9 @@ def results():
 
     global result_cache
     result_cache = result
+
+    # Send results to WordPress
+    send_to_wordpress(session.get('user_name'), session.get('user_email'), result)
 
     return render_template('results.html', result=result)
 
@@ -636,5 +641,40 @@ def determine_alignment(final_totals, breakdown):
         "page_link": attachment_pages[dominant],
     }
 
-if __name__ == '__main__':
-    app.run(debug=True, port=8000, host='127.0.0.1')
+@app.route('/start', methods=['GET', 'POST'])
+def start():
+    if request.method == 'POST':
+        session['user_name'] = request.form['name']
+        session['user_email'] = request.form['email']
+        return redirect(url_for('fc_question', question_index=0))
+    return render_template('start.html')
+
+# Function to send quiz results to WordPress
+# Call this after scoring in your /results route
+
+# import requests
+
+
+def send_to_wordpress(name, email, result):
+    url = "https://adamlanesmith.com/wp-json/custom/v1/submit-quiz"
+    data = {
+        "name": name,
+        "email": email,
+        "result": result  # assume result is just a string
+    }
+    headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',  # Add this
+        'User-Agent': 'Mozilla/5.0'
+    }
+
+    try:
+        response = requests.post(url, data=json.dumps(data), headers=headers, timeout=5, verify=False)
+        response.raise_for_status()
+        print("✅ Success:", response.status_code)
+        print("📦 Response:", response.text)
+    except Exception as e:
+        print("❌ Failed to send result to WordPress:", e)
+
+# Call with flat string result
+send_to_wordpress("Umar", "umar@example.com", "Secure")
