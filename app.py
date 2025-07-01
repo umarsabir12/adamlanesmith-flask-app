@@ -673,7 +673,7 @@ def send_to_wordpress(name, email, result):
     }
 
     try:
-        response = requests.post(url, data=json.dumps(data), headers=headers, timeout=5, verify=False)
+        response = requests.post(url, data=json.dumps(data), headers=headers, timeout=5, verify=True)
         response.raise_for_status()
         print("✅ Success:", response.status_code)
         print("📦 Response:", response.text)
