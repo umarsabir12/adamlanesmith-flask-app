@@ -22,7 +22,7 @@
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
       width: 100%;
-      max-width: 400px;
+      /* max-width: 400px; */
     }
 
     h1 {
@@ -39,6 +39,42 @@
       font-weight: 600;
       display: block;
       margin-bottom: 5px;
+    }
+
+    .checkbox-group {
+      margin-bottom: 20px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 15px;
+      gap: 10px;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      margin: 0;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .checkbox-item label {
+      display: inline;
+      margin: 0;
+      font-weight: normal;
+      line-height: 1.4;
+    }
+
+    .checkbox-item label a {
+      color: #4CAF50;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .checkbox-item label a:hover {
+      color: #45a049;
+      text-decoration: underline;
     }
 
     input[type="text"],
@@ -103,6 +139,33 @@
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required />
       </div>
+      <div class="checkbox-group">
+        <div class="checkbox-item">
+          <input type="checkbox" id="terms" name="terms" required />
+          <label for="terms">I agree to the <a href="https://adamlanesmith.com/terms-conditions/" target="_blank" rel="noopener noreferrer">Terms of Use</a> and the <a href="https://adamlanesmith.com/refunds/" target="_blank" rel="noopener noreferrer">Refund & Cancellation Policy</a>.</label>
+        </div>
+        
+        <div class="checkbox-item">
+          <input type="checkbox" id="age" name="age" required />
+          <label for="age">I confirm I am at least 18 years old.</label>
+        </div>
+        
+        <div class="checkbox-item">
+          <input type="checkbox" id="privacy" name="privacy" required />
+          <label for="privacy">I confirm I have read the <a href="https://adamlanesmith.com/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</label>
+        </div>
+        
+        <div class="checkbox-item">
+          <input type="checkbox" id="health_data" name="health_data" required />
+          <label for="health_data">I consent to the collection and use of my consumer health data as described in the <a href="https://adamlanesmith.com/consumer-health-data-notice/" target="_blank" rel="noopener noreferrer">Consumer Health Data Notice</a>.</label>
+        </div>
+        
+        <div class="checkbox-item">
+          <input type="checkbox" id="disclosure" name="disclosure" required />
+          <label for="disclosure">I consent to the disclosure of my consumer health data to service providers (and, where applicable, to third parties) as described in the <a href="https://adamlanesmith.com/consumer-health-data-notice/" target="_blank" rel="noopener noreferrer">Consumer Health Data Notice</a>.</label>
+        </div>
+      </div>
+
       <button type="submit" class="btn btn-primary">Start Quiz</button>
     </form>
   </div>
